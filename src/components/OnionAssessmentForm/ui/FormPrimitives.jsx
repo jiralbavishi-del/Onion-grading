@@ -83,10 +83,10 @@ export function TextInput({
   const describedBy = error ? `${id}-error` : undefined;
 
   return (
-    <div className="relative rounded-2xl">
+    <div className="relative rounded-xl">
       {Icon && (
-        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-stone-400">
-          <Icon className="w-4 h-4" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-stone-400">
+          <Icon className="w-3.5 h-3.5" />
         </div>
       )}
       <input
@@ -102,9 +102,9 @@ export function TextInput({
         maxLength={maxLength}
         aria-invalid={!!error}
         aria-describedby={describedBy}
-        className={`glow-input w-full rounded-2xl border bg-white/70 backdrop-blur-sm text-stone-900 text-sm font-medium py-3 transition-all placeholder:text-stone-400 focus:outline-hidden focus:bg-white disabled:bg-stone-50 disabled:cursor-not-allowed ${
-          Icon ? 'pl-10' : 'pl-4'
-        } pr-4 ${
+        className={`glow-input w-full rounded-xl border bg-white/80 backdrop-blur-xs text-stone-900 text-xs sm:text-sm font-medium py-2.5 transition-all placeholder:text-stone-400 focus:outline-hidden focus:bg-white disabled:bg-stone-50 disabled:cursor-not-allowed ${
+          Icon ? 'pl-[38px]' : 'pl-3.5'
+        } pr-3.5 ${
           error
             ? 'border-rose-300 focus:border-rose-500 shadow-[0_0_0_3px_rgba(225,29,72,0.08)]'
             : 'border-stone-200/80 hover:border-onion-300 focus:border-onion-600'
@@ -135,10 +135,10 @@ export function Select({
   const describedBy = error ? `${id}-error` : undefined;
 
   return (
-    <div className="relative rounded-2xl">
+    <div className="relative rounded-xl">
       {Icon && (
-        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-stone-400">
-          <Icon className="w-4 h-4" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-stone-400">
+          <Icon className="w-3.5 h-3.5" />
         </div>
       )}
       <select
@@ -150,9 +150,9 @@ export function Select({
         disabled={disabled}
         aria-invalid={!!error}
         aria-describedby={describedBy}
-        className={`glow-input w-full appearance-none rounded-2xl border bg-white/70 backdrop-blur-sm text-stone-900 text-sm font-medium py-3 transition-all focus:outline-hidden focus:bg-white disabled:bg-stone-50 disabled:cursor-not-allowed ${
-          Icon ? 'pl-10' : 'pl-4'
-        } pr-10 ${
+        className={`glow-input w-full appearance-none rounded-xl border bg-white/80 backdrop-blur-xs text-stone-900 text-xs sm:text-sm font-medium py-2.5 transition-all focus:outline-hidden focus:bg-white disabled:bg-stone-50 disabled:cursor-not-allowed ${
+          Icon ? 'pl-[38px]' : 'pl-3.5'
+        } pr-8 ${
           error
             ? 'border-rose-300 focus:border-rose-500 shadow-[0_0_0_3px_rgba(225,29,72,0.08)]'
             : 'border-stone-200/80 hover:border-onion-300 focus:border-onion-600'
@@ -170,7 +170,7 @@ export function Select({
           );
         })}
       </select>
-      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-stone-400">
+      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2.5 text-stone-400">
         <ChevronDownIcon className="w-4 h-4" />
       </div>
     </div>

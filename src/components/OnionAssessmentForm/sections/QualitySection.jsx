@@ -1,10 +1,9 @@
 import React from 'react';
-import { Field, PercentInput, SectionHeading } from '../ui/FormPrimitives';
-import { SlidersIcon } from '../ui/icons';
+import { ActivityIcon } from '../ui/icons';
 
 /**
- * Section 3: Physical Quality Parameters (Streamlined to 4 core clamped % fields)
- * Enforces strict 0-100 clamping on all 4 percentage fields (moisture, sprouting, damage, doubles).
+ * Bento Tile 4: Defect Tolerance & Quantitative Calibration Board
+ * Features dual range sliders + numeric steppers with color-coded tolerance tracks.
  */
 export function QualitySection({
   values,
@@ -20,183 +19,150 @@ export function QualitySection({
 
   const totalDefectPct = Math.min(100, Math.round((sproutingVal + damageVal + doublesVal) * 10) / 10);
 
-  // Moisture status evaluation
-  const getMoistureBadge = () => {
-    if (values.moisture === '' || values.moisture === undefined) return null;
-    if (moistureVal <= 12) return { text: t.moistureOptimal || 'Optimal', color: 'text-emerald-700 bg-emerald-50 border-emerald-200' };
-    if (moistureVal <= 14) return { text: t.moistureSafe || 'Safe', color: 'text-emerald-700 bg-emerald-50 border-emerald-200' };
-    if (moistureVal <= 16) return { text: t.moistureDamp || 'Damp', color: 'text-amber-700 bg-amber-50 border-amber-200' };
-    return { text: t.moistureHighRisk || 'High Risk', color: 'text-rose-700 bg-rose-50 border-rose-200' };
+  // Status helper
+  const getStatusText = (val, safeMax, cautionMax) => {
+    if (val <= safeMax) return { label: 'Optimal / Safe', color: 'text-emerald-700 bg-emerald-50 border-emerald-200' };
+    if (val <= cautionMax) return { label: 'Borderline Caution', color: 'text-amber-700 bg-amber-50 border-amber-200' };
+    return { label: 'Exceeds Tolerance', color: 'text-rose-700 bg-rose-50 border-rose-200' };
   };
 
-  const moistureStatus = getMoistureBadge();
+  const handleSliderChange = (field, e) => {
+    const raw = parseFloat(e.target.value);
+    const clamped = Math.max(0, Math.min(field === 'moisture' ? 30 : 100, isNaN(raw) ? 0 : raw));
+    onChange(field, clamped);
+  };
+
+  const defectParameters = [
+    {
+      id: 'sprouting',
+      label: t.sprouting || 'Sprouting Rate',
+      value: sproutingVal,
+      max: 30,
+      step: 0.5,
+      safeMax: 3,
+      cautionMax: 8,
+      hint: '0% – 5% Export | >8% Reject',
+    },
+    {
+      id: 'doubles',
+      label: t.doubles || 'Doubles & Splits',
+      value: doublesVal,
+      max: 30,
+      step: 0.5,
+      safeMax: 3,
+      cautionMax: 6,
+      hint: '0% – 4% Standard | >6% Industrial',
+    },
+    {
+      id: 'moisture',
+      label: t.moisture || 'Moisture Content',
+      value: moistureVal,
+      max: 25,
+      step: 0.1,
+      safeMax: 14,
+      cautionMax: 16,
+      hint: 'Benchmarked: 12% – 14%',
+    },
+    {
+      id: 'damage',
+      label: t.damage || 'Mechanical Damage',
+      value: damageVal,
+      max: 30,
+      step: 0.5,
+      safeMax: 3,
+      cautionMax: 7,
+      hint: '0% – 3% Clean | >7% Blemish',
+    },
+  ];
 
   return (
-    <div id="section-quality" className="glass-card rounded-3xl p-5 sm:p-6 space-y-5">
-      <SectionHeading
-        icon={SlidersIcon}
-        title={t.sec3Title || 'Quality & Defect Quantitative Analysis'}
-        subtitle={t.sec3Sub || 'Moisture content & physiological defect percentages (0–100%)'}
-        badge={t.sec3Badge || 'Section 03'}
-        action={
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-white/80 border border-stone-200/80 text-xs shadow-2xs">
-            <span className="text-stone-500 font-medium">
-              {t.defectLoad || 'Cumulative Defect'}:
-            </span>
-            <span
-              className={`font-bold font-mono px-2 py-0.5 rounded-lg border ${
-                totalDefectPct > 15
-                  ? 'bg-rose-100 text-rose-700 border-rose-200'
-                  : totalDefectPct > 5
-                  ? 'bg-amber-100 text-amber-700 border-amber-200'
-                  : 'bg-onion-100 text-onion-800 border-onion-200'
-              }`}
+    <div id="section-quality" className="bento-tile p-5 sm:p-6 space-y-4 h-full flex flex-col justify-between">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <span className="bento-header-label">{t.telemetryCalibration || 'Telemetry Calibration'}</span>
+          <h2 className="text-base font-extrabold text-stone-900 tracking-tight flex items-center gap-1.5">
+            {t.defectToleranceCalibration || 'Defect Tolerance Calibration'}
+          </h2>
+        </div>
+        <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          <span>{t.liveValue || 'Live Value'}</span>
+        </div>
+      </div>
+
+      {/* Sliders List */}
+      <div className="space-y-3.5">
+        {defectParameters.map((param) => {
+          const status = getStatusText(param.value, param.safeMax, param.cautionMax);
+          return (
+            <div
+              key={param.id}
+              className="p-3 rounded-2xl bg-stone-50/80 border border-stone-200/60 hover:bg-white/80 transition-colors"
             >
-              {totalDefectPct}%
-            </span>
-          </div>
-        }
-      />
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-xs font-bold text-stone-700">{param.label}</span>
+                <div className="flex items-center gap-2">
+                  <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded border ${status.color}`}>
+                    {status.label}
+                  </span>
+                  <div className="flex items-center bg-white rounded-lg border border-stone-300/80 px-2 py-0.5 shadow-2xs">
+                    <input
+                      type="number"
+                      value={param.value}
+                      min={0}
+                      max={param.max}
+                      step={param.step}
+                      disabled={disabled}
+                      onChange={(e) => onChange(param.id, parseFloat(e.target.value) || 0)}
+                      className="w-10 text-right font-mono font-bold text-xs text-stone-900 focus:outline-none bg-transparent"
+                    />
+                    <span className="text-[10px] text-stone-400 font-mono ml-0.5">%</span>
+                  </div>
+                </div>
+              </div>
 
-      {/* Clamped Percentage Fields Grid (Compact 2x2 layout) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-        {/* 1. Moisture Content % */}
-        <div className="p-3.5 rounded-2xl bg-stone-50/70 border border-stone-200/70 space-y-2">
-          <Field
-            id="quality-moisture"
-            label={t.moisture || 'Moisture Content'}
-            required
-            error={errors.moisture}
-            hint={t.moistureHint || 'Benchmarked: 12% – 14%'}
-            labelRight={
-              moistureStatus && (
-                <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md border ${moistureStatus.color}`}>
-                  {moistureStatus.text}
-                </span>
-              )
-            }
-          >
-            <PercentInput
-              id="quality-moisture"
-              name="moisture"
-              value={values.moisture ?? ''}
-              onChange={(val) => onChange('moisture', val)}
-              placeholder="e.g. 13.5"
-              disabled={disabled}
-              error={errors.moisture}
-              step={0.1}
-            />
-          </Field>
-          <div className="h-1.5 w-full bg-stone-200 rounded-full overflow-hidden">
-            <div
-              className={`h-full transition-all duration-300 ${
-                moistureVal > 16 ? 'bg-rose-500' : moistureVal > 14 ? 'bg-amber-500' : 'bg-emerald-500'
-              }`}
-              style={{ width: `${Math.min(100, (moistureVal / 25) * 100)}%` }}
-            />
-          </div>
+              {/* Range Slider */}
+              <div className="relative pt-1 pb-0.5">
+                <input
+                  type="range"
+                  min={0}
+                  max={param.max}
+                  step={param.step}
+                  value={param.value}
+                  disabled={disabled}
+                  onChange={(e) => handleSliderChange(param.id, e)}
+                  className="bento-range"
+                />
+              </div>
+
+              {/* Benchmark hint */}
+              <div className="flex justify-between items-center text-[10px] text-stone-400 font-medium mt-0.5">
+                <span>0%</span>
+                <span className="text-[9px] text-stone-500">{param.hint}</span>
+                <span>{param.max}%</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Calibration Footer / Summary */}
+      <div className="pt-2 border-t border-stone-200/60 flex items-center justify-between text-xs">
+        <div className="flex items-center gap-1.5 text-stone-500 text-[11px] font-medium">
+          <ActivityIcon className="w-3.5 h-3.5 text-onion-600" />
+          <span>{t.statusLabel || 'Status:'}</span>
+          <span className="font-mono font-bold text-stone-700">{t.calibrationActive || '[CALIBRATION ACTIVE]'}</span>
         </div>
-
-        {/* 2. Sprouting Rate % */}
-        <div className="p-3.5 rounded-2xl bg-stone-50/70 border border-stone-200/70 space-y-2">
-          <Field
-            id="quality-sprouting"
-            label={t.sprouting || 'Sprouting Rate'}
-            required
-            error={errors.sprouting}
-            hint={t.sproutingHint || 'Internal shoot emergence'}
-            labelRight={
-              sproutingVal > 0 && (
-                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-rose-100 text-rose-700 border border-rose-200">
-                  {t.defectTag || 'Defect'}
-                </span>
-              )
-            }
-          >
-            <PercentInput
-              id="quality-sprouting"
-              name="sprouting"
-              value={values.sprouting ?? ''}
-              onChange={(val) => onChange('sprouting', val)}
-              placeholder="0"
-              disabled={disabled}
-              error={errors.sprouting}
-            />
-          </Field>
-          <div className="h-1.5 w-full bg-stone-200 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-rose-500 transition-all duration-300"
-              style={{ width: `${Math.min(100, sproutingVal)}%` }}
-            />
-          </div>
-        </div>
-
-        {/* 3. Physical Damage % */}
-        <div className="p-3.5 rounded-2xl bg-stone-50/70 border border-stone-200/70 space-y-2">
-          <Field
-            id="quality-damage"
-            label={t.damage || 'Physical Damage'}
-            required
-            error={errors.damage}
-            hint={t.damageHint || 'Knife cuts, skin ruptures'}
-            labelRight={
-              damageVal > 5 && (
-                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-amber-100 text-amber-700 border border-amber-200">
-                  {t.elevatedTag || 'Elevated'}
-                </span>
-              )
-            }
-          >
-            <PercentInput
-              id="quality-damage"
-              name="damage"
-              value={values.damage ?? ''}
-              onChange={(val) => onChange('damage', val)}
-              placeholder="0"
-              disabled={disabled}
-              error={errors.damage}
-            />
-          </Field>
-          <div className="h-1.5 w-full bg-stone-200 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-amber-500 transition-all duration-300"
-              style={{ width: `${Math.min(100, damageVal)}%` }}
-            />
-          </div>
-        </div>
-
-        {/* 4. Doubles / Bolters % */}
-        <div className="p-3.5 rounded-2xl bg-stone-50/70 border border-stone-200/70 space-y-2">
-          <Field
-            id="quality-doubles"
-            label={t.doubles || 'Doubles & Bolters'}
-            required
-            error={errors.doubles}
-            hint={t.doublesHint || 'Split bulbs & bolters'}
-            labelRight={
-              doublesVal > 0 && (
-                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-purple-100 text-purple-700 border border-purple-200">
-                  {t.splitTag || 'Split'}
-                </span>
-              )
-            }
-          >
-            <PercentInput
-              id="quality-doubles"
-              name="doubles"
-              value={values.doubles ?? ''}
-              onChange={(val) => onChange('doubles', val)}
-              placeholder="0"
-              disabled={disabled}
-              error={errors.doubles}
-            />
-          </Field>
-          <div className="h-1.5 w-full bg-stone-200 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-purple-500 transition-all duration-300"
-              style={{ width: `${Math.min(100, doublesVal)}%` }}
-            />
-          </div>
+        <div className="flex items-center gap-1.5">
+          <span className="text-stone-400 text-[11px]">{t.cumulativeDefect || 'Cumulative Defect:'}</span>
+          <span className={`font-mono font-bold px-2 py-0.5 rounded-lg border ${
+            totalDefectPct > 15 ? 'bg-rose-100 text-rose-700 border-rose-200' :
+            totalDefectPct > 5 ? 'bg-amber-100 text-amber-700 border-amber-200' :
+            'bg-emerald-100 text-emerald-800 border-emerald-200'
+          }`}>
+            {totalDefectPct}%
+          </span>
         </div>
       </div>
     </div>
