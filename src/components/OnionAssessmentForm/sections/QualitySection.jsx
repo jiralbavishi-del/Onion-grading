@@ -23,33 +23,33 @@ export function QualitySection({
   // Moisture status evaluation
   const getMoistureBadge = () => {
     if (values.moisture === '' || values.moisture === undefined) return null;
-    if (moistureVal <= 12) return { text: 'Optimal', color: 'text-emerald-700 bg-emerald-50 dark:bg-emerald-950/60' };
-    if (moistureVal <= 14) return { text: 'Safe', color: 'text-emerald-700 bg-emerald-50 dark:bg-emerald-950/60' };
-    if (moistureVal <= 16) return { text: 'Damp', color: 'text-amber-700 bg-amber-50 dark:bg-amber-950/60' };
-    return { text: 'High Risk', color: 'text-rose-700 bg-rose-50 dark:bg-rose-950/60' };
+    if (moistureVal <= 12) return { text: t.moistureOptimal || 'Optimal', color: 'text-emerald-700 bg-emerald-50 border-emerald-200' };
+    if (moistureVal <= 14) return { text: t.moistureSafe || 'Safe', color: 'text-emerald-700 bg-emerald-50 border-emerald-200' };
+    if (moistureVal <= 16) return { text: t.moistureDamp || 'Damp', color: 'text-amber-700 bg-amber-50 border-amber-200' };
+    return { text: t.moistureHighRisk || 'High Risk', color: 'text-rose-700 bg-rose-50 border-rose-200' };
   };
 
   const moistureStatus = getMoistureBadge();
 
   return (
-    <div className="glass-card rounded-3xl border border-papery-200/90 dark:border-onion-900/60 p-7 sm:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.4)] transition-all hover:border-onion-300/80 dark:hover:border-onion-800 space-y-6">
+    <div id="section-quality" className="glass-card rounded-3xl p-5 sm:p-6 space-y-5">
       <SectionHeading
         icon={SlidersIcon}
         title={t.sec3Title || 'Quality & Defect Quantitative Analysis'}
-        subtitle={t.sec3Sub || 'Evaluate moisture content and physiological defect percentages (Clamped 0–100%)'}
+        subtitle={t.sec3Sub || 'Moisture content & physiological defect percentages (0–100%)'}
         badge={t.sec3Badge || 'Section 03'}
         action={
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-stone-100/90 dark:bg-stone-900/90 border border-papery-200 dark:border-stone-700 text-xs shadow-2xs">
-            <span className="text-stone-600 dark:text-stone-400 font-medium">
-              {t.defectLoad || 'Cumulative Defect Load'}:
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-white/80 border border-stone-200/80 text-xs shadow-2xs">
+            <span className="text-stone-500 font-medium">
+              {t.defectLoad || 'Cumulative Defect'}:
             </span>
             <span
-              className={`font-bold font-mono px-2 py-0.5 rounded-lg ${
+              className={`font-bold font-mono px-2 py-0.5 rounded-lg border ${
                 totalDefectPct > 15
-                  ? 'bg-rose-100 text-rose-700 dark:bg-rose-900/50 dark:text-rose-300'
+                  ? 'bg-rose-100 text-rose-700 border-rose-200'
                   : totalDefectPct > 5
-                  ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300'
-                  : 'bg-onion-100 text-onion-800 dark:bg-onion-950 dark:text-onion-300'
+                  ? 'bg-amber-100 text-amber-700 border-amber-200'
+                  : 'bg-onion-100 text-onion-800 border-onion-200'
               }`}
             >
               {totalDefectPct}%
@@ -58,19 +58,19 @@ export function QualitySection({
         }
       />
 
-      {/* Clamped Percentage Fields Grid (The 4 essential metrics) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      {/* Clamped Percentage Fields Grid (Compact 2x2 layout) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
         {/* 1. Moisture Content % */}
-        <div className="p-4 rounded-2xl bg-stone-50/70 dark:bg-stone-900/50 border border-papery-200/80 dark:border-stone-800 space-y-2">
+        <div className="p-3.5 rounded-2xl bg-stone-50/70 border border-stone-200/70 space-y-2">
           <Field
             id="quality-moisture"
             label={t.moisture || 'Moisture Content'}
             required
             error={errors.moisture}
-            hint={t.moistureHint || 'Benchmarked target: 12% – 14%'}
+            hint={t.moistureHint || 'Benchmarked: 12% – 14%'}
             labelRight={
               moistureStatus && (
-                <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md ${moistureStatus.color}`}>
+                <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md border ${moistureStatus.color}`}>
                   {moistureStatus.text}
                 </span>
               )
@@ -87,7 +87,7 @@ export function QualitySection({
               step={0.1}
             />
           </Field>
-          <div className="h-1.5 w-full bg-stone-200 dark:bg-stone-700 rounded-full overflow-hidden">
+          <div className="h-1.5 w-full bg-stone-200 rounded-full overflow-hidden">
             <div
               className={`h-full transition-all duration-300 ${
                 moistureVal > 16 ? 'bg-rose-500' : moistureVal > 14 ? 'bg-amber-500' : 'bg-emerald-500'
@@ -98,17 +98,17 @@ export function QualitySection({
         </div>
 
         {/* 2. Sprouting Rate % */}
-        <div className="p-4 rounded-2xl bg-stone-50/70 dark:bg-stone-900/50 border border-papery-200/80 dark:border-stone-800 space-y-2">
+        <div className="p-3.5 rounded-2xl bg-stone-50/70 border border-stone-200/70 space-y-2">
           <Field
             id="quality-sprouting"
             label={t.sprouting || 'Sprouting Rate'}
             required
             error={errors.sprouting}
-            hint={t.sproutingHint || 'Internal green shoot emergence'}
+            hint={t.sproutingHint || 'Internal shoot emergence'}
             labelRight={
               sproutingVal > 0 && (
-                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-rose-100 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300">
-                  Defect
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-rose-100 text-rose-700 border border-rose-200">
+                  {t.defectTag || 'Defect'}
                 </span>
               )
             }
@@ -123,7 +123,7 @@ export function QualitySection({
               error={errors.sprouting}
             />
           </Field>
-          <div className="h-1.5 w-full bg-stone-200 dark:bg-stone-700 rounded-full overflow-hidden">
+          <div className="h-1.5 w-full bg-stone-200 rounded-full overflow-hidden">
             <div
               className="h-full bg-rose-500 transition-all duration-300"
               style={{ width: `${Math.min(100, sproutingVal)}%` }}
@@ -132,17 +132,17 @@ export function QualitySection({
         </div>
 
         {/* 3. Physical Damage % */}
-        <div className="p-4 rounded-2xl bg-stone-50/70 dark:bg-stone-900/50 border border-papery-200/80 dark:border-stone-800 space-y-2">
+        <div className="p-3.5 rounded-2xl bg-stone-50/70 border border-stone-200/70 space-y-2">
           <Field
             id="quality-damage"
-            label={t.damage || 'Physical Damage / Cuts'}
+            label={t.damage || 'Physical Damage'}
             required
             error={errors.damage}
-            hint={t.damageHint || 'Mechanical knife cuts, crush'}
+            hint={t.damageHint || 'Knife cuts, skin ruptures'}
             labelRight={
               damageVal > 5 && (
-                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300">
-                  Elevated
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-amber-100 text-amber-700 border border-amber-200">
+                  {t.elevatedTag || 'Elevated'}
                 </span>
               )
             }
@@ -157,7 +157,7 @@ export function QualitySection({
               error={errors.damage}
             />
           </Field>
-          <div className="h-1.5 w-full bg-stone-200 dark:bg-stone-700 rounded-full overflow-hidden">
+          <div className="h-1.5 w-full bg-stone-200 rounded-full overflow-hidden">
             <div
               className="h-full bg-amber-500 transition-all duration-300"
               style={{ width: `${Math.min(100, damageVal)}%` }}
@@ -166,17 +166,17 @@ export function QualitySection({
         </div>
 
         {/* 4. Doubles / Bolters % */}
-        <div className="p-4 rounded-2xl bg-stone-50/70 dark:bg-stone-900/50 border border-papery-200/80 dark:border-stone-800 space-y-2">
+        <div className="p-3.5 rounded-2xl bg-stone-50/70 border border-stone-200/70 space-y-2">
           <Field
             id="quality-doubles"
             label={t.doubles || 'Doubles & Bolters'}
             required
             error={errors.doubles}
-            hint={t.doublesHint || 'Split bulbs & premature seed heads'}
+            hint={t.doublesHint || 'Split bulbs & bolters'}
             labelRight={
               doublesVal > 0 && (
-                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-stone-200 text-stone-700 dark:bg-stone-700 dark:text-stone-300">
-                  Split
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-purple-100 text-purple-700 border border-purple-200">
+                  {t.splitTag || 'Split'}
                 </span>
               )
             }
@@ -191,7 +191,7 @@ export function QualitySection({
               error={errors.doubles}
             />
           </Field>
-          <div className="h-1.5 w-full bg-stone-200 dark:bg-stone-700 rounded-full overflow-hidden">
+          <div className="h-1.5 w-full bg-stone-200 rounded-full overflow-hidden">
             <div
               className="h-full bg-purple-500 transition-all duration-300"
               style={{ width: `${Math.min(100, doublesVal)}%` }}

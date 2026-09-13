@@ -1,14 +1,48 @@
 import React from 'react';
 
-export function OnionMark({ size = 30 }) {
+export function OnionMark({ size = 30, className = '' }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 40 40" fill="none">
-      <path d="M20 6c2 2 3 4 3 6" stroke="#5C7A52" strokeWidth="2" strokeLinecap="round" />
-      <ellipse cx="20" cy="24" rx="13" ry="14" fill="#7C3654" />
-      <path d="M20 10c-5 4-8 9-8 14s3 10 8 14c5-4 8-9 8-14s-3-10-8-14Z" fill="#93415F" />
-      <path d="M20 10v28" stroke="#5C2740" strokeWidth="1" opacity="0.6" />
-      <path d="M13 18c3-2 11-2 14 0" stroke="#5C2740" strokeWidth="1" opacity="0.5" />
-      <path d="M12 26c4 2 12 2 16 0" stroke="#5C2740" strokeWidth="1" opacity="0.5" />
+    <svg width={size} height={size} viewBox="0 0 36 36" fill="none" className={className}>
+      {/* Fresh Green Sprout */}
+      <path d="M18 4C18 8 21 10 23.5 11" stroke="#4ADE80" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M17 5C16 8 13.5 10 11.5 11" stroke="#22C55E" strokeWidth="2.2" strokeLinecap="round" />
+      <path d="M18 3.5V9.5" stroke="#86EFAC" strokeWidth="2.2" strokeLinecap="round" />
+
+      {/* Crisp White/Cream Outer Bulb with delicate rose glow */}
+      <path
+        d="M18 8.5C11.5 13 8 18.5 8 23.5C8 29.5 12.3 33 18 33C23.7 33 28 29.5 28 23.5C28 18.5 24.5 13 18 8.5Z"
+        fill="url(#navOnionOuter)"
+        stroke="#FFFFFF"
+        strokeWidth="1.2"
+      />
+
+      {/* Radiant Rose/Crimson Inner Bulb Heart */}
+      <path
+        d="M18 9.5C13.5 14.5 11.5 19 11.5 23.5C11.5 28 14.2 31 18 31.5C21.8 31 24.5 28 24.5 23.5C24.5 19 22.5 14.5 18 9.5Z"
+        fill="url(#navOnionInner)"
+      />
+
+      {/* Glossy Center Highlight */}
+      <path
+        d="M18 12C15.5 16 14.5 19.5 14.5 23.5C14.5 26.8 16 29 18 29.5C20 29 21.5 26.8 21.5 23.5C21.5 19.5 20.5 16 18 12Z"
+        fill="#FFFFFF"
+        fillOpacity="0.4"
+      />
+
+      {/* Gold Roots */}
+      <path d="M16 33L15.5 35M18 33V35.5M20 33L20.5 35" stroke="#FDE047" strokeWidth="1.6" strokeLinecap="round" />
+
+      <defs>
+        <linearGradient id="navOnionOuter" x1="18" y1="8.5" x2="18" y2="33" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#FFF1F2" />
+          <stop offset="60%" stopColor="#FECDD3" />
+          <stop offset="100%" stopColor="#FDA4AF" />
+        </linearGradient>
+        <linearGradient id="navOnionInner" x1="18" y1="9.5" x2="18" y2="31.5" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#F43F5E" />
+          <stop offset="100%" stopColor="#BE123C" />
+        </linearGradient>
+      </defs>
     </svg>
   );
 }
@@ -198,6 +232,15 @@ export function ActivityIcon({ className = 'w-5 h-5', ...props }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" {...props}>
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+    </svg>
+  );
+}
+
+export function GlobeIcon({ className = 'w-4 h-4', ...props }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" {...props}>
+      <circle cx="12" cy="12" r="10" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
     </svg>
   );
 }

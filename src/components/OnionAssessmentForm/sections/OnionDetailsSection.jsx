@@ -16,7 +16,7 @@ export function OnionDetailsSection({
   t = {},
 }) {
   return (
-    <div className="glass-card rounded-3xl border border-papery-200/90 dark:border-onion-900/60 p-7 sm:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.4)] transition-all hover:border-onion-300/80 dark:hover:border-onion-800 space-y-6">
+    <div id="section-details" className="glass-card rounded-3xl p-5 sm:p-6 space-y-4">
       <SectionHeading
         icon={TagIcon}
         title={t.sec2Title || 'Crop Details & Classification'}
@@ -38,7 +38,7 @@ export function OnionDetailsSection({
           onChange={(e) => onChange('variety', e.target.value)}
           options={ONION_VARIETIES.map((v) => ({
             value: v.id,
-            label: `${v.name} (${v.type})`,
+            label: `${t[v.name] || v.name} (${t[v.type] || v.type})`,
           }))}
           placeholder={t.varietyPlh || 'Select cultivar / variety'}
           disabled={disabled}
@@ -47,7 +47,7 @@ export function OnionDetailsSection({
       </Field>
 
       {/* 2. Grade Picker */}
-      <div className="pt-2">
+      <div className="pt-1">
         <GradePicker
           id="assessment-grade-picker"
           label={t.gradeClassification || 'Quality Grade Classification'}
@@ -55,6 +55,7 @@ export function OnionDetailsSection({
           onChange={(newGrade) => onChange('grade', newGrade)}
           grades={GRADES}
           disabled={disabled}
+          t={t}
         />
         {errors.grade && (
           <p className="mt-1 text-xs text-rose-500 font-semibold" role="alert">
@@ -64,7 +65,7 @@ export function OnionDetailsSection({
       </div>
 
       {/* 3. Size Picker */}
-      <div className="pt-2">
+      <div className="pt-1">
         <SizePicker
           id="assessment-size-picker"
           label={t.sizeClassification || 'Size Caliber Classification'}
@@ -72,6 +73,7 @@ export function OnionDetailsSection({
           onChange={(newSize) => onChange('sizeClass', newSize)}
           sizes={SIZE_CLASSES}
           disabled={disabled}
+          t={t}
         />
         {errors.sizeClass && (
           <p className="mt-1 text-xs text-rose-500 font-semibold" role="alert">

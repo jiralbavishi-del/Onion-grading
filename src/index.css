@@ -2,38 +2,472 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ═══════════════════════════════════════════════════════════════
+   GLASSMORPHISM + NEOMORPHISM HYBRID — Premium Design System
+   Inspired by Apple Vision Pro / Linear.app / Vercel
+   ═══════════════════════════════════════════════════════════════ */
+
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    background-color: #F7F4EF;
-    color: #2B1D2E;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #F8F6F0;
+    color: #1F191E;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
   input::placeholder,
   textarea::placeholder {
-    color: #B7ABA1;
+    color: #A3968B;
   }
 
   input[type=number]::-webkit-inner-spin-button,
   input[type=number]::-webkit-outer-spin-button {
-    opacity: 0.5;
+    opacity: 0.6;
   }
 }
 
-/* Custom scrollbars */
+/* ═══════════════════════════════════════════════════════════════
+   KEYFRAME ANIMATIONS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Floating ambient orbs */
+@keyframes float-slow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -20px) scale(1.05); }
+  50% { transform: translate(-20px, 15px) scale(0.95); }
+  75% { transform: translate(15px, 25px) scale(1.02); }
+}
+
+@keyframes float-slower {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-25px, 30px) scale(1.08); }
+  66% { transform: translate(20px, -25px) scale(0.96); }
+}
+
+/* Section entrance animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Shimmer sweep for buttons */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Gradient border rotation */
+@keyframes gradient-rotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Pulse glow for selected items */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(155, 29, 60, 0.3); }
+  50% { box-shadow: 0 0 20px 4px rgba(155, 29, 60, 0.15); }
+}
+
+/* Circular gauge fill */
+@keyframes gauge-fill {
+  from { stroke-dashoffset: 314; }
+}
+
+/* Score counter */
+@keyframes count-up {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Success checkmark */
+@keyframes checkmark-draw {
+  0% { stroke-dashoffset: 100; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes success-ring {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Subtle breathing glow */
+@keyframes breathe {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+/* Dot pulse for live indicator */
+@keyframes dot-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.8); opacity: 0.4; }
+}
+
+/* Ripple click */
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 0.5; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GLASSMORPHISM CARDS
+   ═══════════════════════════════════════════════════════════════ */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(24px) saturate(1.8);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 4px 24px -2px rgba(109, 26, 48, 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 12px 40px -8px rgba(109, 26, 48, 0.12),
+    0 4px 12px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border-color: rgba(155, 29, 60, 0.15);
+}
+
+/* Navbar glass */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(24px) saturate(1.8);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(0, 0, 0, 0.03);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATED BACKGROUND
+   ═══════════════════════════════════════════════════════════════ */
+
+.bg-mesh-pattern {
+  background-image:
+    radial-gradient(at 0% 0%, rgba(188, 40, 75, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(212, 175, 55, 0.09) 0px, transparent 45%),
+    radial-gradient(at 50% 100%, rgba(155, 29, 60, 0.06) 0px, transparent 50%);
+}
+
+/* Floating animated orbs */
+.floating-orb {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(80px);
+  opacity: 0.5;
+}
+
+.floating-orb-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(155, 29, 60, 0.12), transparent 70%);
+  top: -10%;
+  left: -5%;
+  animation: float-slow 20s ease-in-out infinite;
+}
+
+.floating-orb-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.1), transparent 70%);
+  top: 30%;
+  right: -8%;
+  animation: float-slower 25s ease-in-out infinite;
+}
+
+.floating-orb-3 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(191, 147, 81, 0.08), transparent 70%);
+  bottom: -5%;
+  left: 25%;
+  animation: float-slow 22s ease-in-out infinite reverse;
+}
+
+/* Grain texture overlay */
+.grain-overlay::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ENTRANCE ANIMATIONS
+   ═══════════════════════════════════════════════════════════════ */
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-delay-1 { animation-delay: 0.08s; }
+.animate-delay-2 { animation-delay: 0.16s; }
+.animate-delay-3 { animation-delay: 0.24s; }
+.animate-delay-4 { animation-delay: 0.32s; }
+.animate-delay-5 { animation-delay: 0.40s; }
+.animate-delay-6 { animation-delay: 0.48s; }
+
+/* ═══════════════════════════════════════════════════════════════
+   INTERACTIVE ELEMENTS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Glow focus effect for inputs */
+.glow-input {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.glow-input:focus {
+  box-shadow:
+    0 0 0 3px rgba(155, 29, 60, 0.1),
+    0 0 20px -4px rgba(155, 29, 60, 0.15),
+    0 1px 2px rgba(0, 0, 0, 0.04);
+  border-color: #9B1D3C !important;
+}
+
+/* Shimmer button */
+.shimmer-btn {
+  position: relative;
+  overflow: hidden;
+  background-size: 200% auto;
+  transition: all 0.3s ease;
+}
+
+.shimmer-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.2) 40%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.2) 60%,
+    transparent 80%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.shimmer-btn:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 8px 24px -4px rgba(155, 29, 60, 0.35),
+    0 2px 8px rgba(155, 29, 60, 0.2);
+}
+
+.shimmer-btn:active {
+  transform: translateY(0);
+}
+
+/* Grade card glow on selection */
+.grade-card-selected {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: scale(1.02);
+}
+
+.grade-card-glow-onion {
+  box-shadow:
+    0 0 0 2px rgba(155, 29, 60, 0.2),
+    0 4px 20px -4px rgba(155, 29, 60, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.grade-card-glow-amber {
+  box-shadow:
+    0 0 0 2px rgba(217, 119, 6, 0.2),
+    0 4px 20px -4px rgba(217, 119, 6, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.grade-card-glow-rose {
+  box-shadow:
+    0 0 0 2px rgba(225, 29, 72, 0.2),
+    0 4px 20px -4px rgba(225, 29, 72, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.grade-card-glow-stone {
+  box-shadow:
+    0 0 0 2px rgba(120, 113, 108, 0.2),
+    0 4px 20px -4px rgba(120, 113, 108, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Size circle pulse */
+.size-circle-pulse {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Hover shimmer sweep on cards */
+.hover-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.hover-shimmer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.15) 48%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0.15) 52%,
+    transparent 70%
+  );
+  transform: translateX(-150%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hover-shimmer:hover::before {
+  transform: translateX(150%);
+}
+
+/* Live dot pulse */
+.live-dot {
+  animation: dot-pulse 2s ease-in-out infinite;
+}
+
+/* Animated gradient underline */
+.gradient-underline {
+  position: relative;
+}
+
+.gradient-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #9B1D3C, #D4AF37, #9B1D3C);
+  background-size: 200% auto;
+  animation: gradient-rotate 3s linear infinite;
+}
+
+/* Animated gradient header border */
+.animated-border-bottom {
+  position: relative;
+}
+
+.animated-border-bottom::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent,
+    #9B1D3C 20%,
+    #D4AF37 50%,
+    #9B1D3C 80%,
+    transparent
+  );
+  background-size: 200% auto;
+  animation: gradient-rotate 4s linear infinite;
+  opacity: 0.6;
+}
+
+/* Progress step indicator */
+.progress-step {
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.progress-step-active {
+  background: linear-gradient(135deg, #9B1D3C, #D4AF37);
+  box-shadow: 0 0 12px -2px rgba(155, 29, 60, 0.4);
+  transform: scale(1.3);
+}
+
+.progress-step-completed {
+  background: #9B1D3C;
+  box-shadow: 0 0 8px -2px rgba(155, 29, 60, 0.3);
+}
+
+/* Circular gauge SVG */
+.gauge-ring {
+  transition: stroke-dashoffset 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.gauge-glow-good {
+  filter: drop-shadow(0 0 8px rgba(155, 29, 60, 0.3));
+}
+
+.gauge-glow-mid {
+  filter: drop-shadow(0 0 8px rgba(217, 119, 6, 0.3));
+}
+
+.gauge-glow-bad {
+  filter: drop-shadow(0 0 8px rgba(225, 29, 72, 0.3));
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLLBAR
+   ═══════════════════════════════════════════════════════════════ */
+
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
 }
+
 ::-webkit-scrollbar-track {
-  background: #F7F4EF;
+  background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #D8CCC2;
+  background: rgba(155, 29, 60, 0.15);
   border-radius: 9999px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #7C3654;
+  background: rgba(155, 29, 60, 0.35);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SMOOTH TRANSITIONS (Global)
+   ═══════════════════════════════════════════════════════════════ */
+
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, box-shadow, opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Override for elements that need no default transition */
+.no-transition,
+svg,
+svg * {
+  transition: none;
 }

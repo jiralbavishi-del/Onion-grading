@@ -3,12 +3,12 @@ import { ChevronDownIcon } from './icons';
 import { clampPercent } from '../constants';
 
 /**
- * Generic Form Primitives with ZERO domain knowledge.
- * Fully accessible with label bindings, ARIA attributes, and state indicators.
+ * Premium Form Primitives — Glassmorphism + Neomorphism Hybrid
+ * Fully accessible with glow focus states, glass backgrounds, and micro-animations
  */
 
 /**
- * Wrapper for form inputs providing standard label, required mark, hint, and error text.
+ * Field wrapper with label, hint, and error.
  */
 export function Field({
   id,
@@ -26,24 +26,24 @@ export function Field({
         {label && (
           <label
             htmlFor={id}
-            className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300"
+            className="block text-[11px] font-bold uppercase tracking-wider text-stone-600"
           >
             {label}
             {required && (
               <>
-                <span className="text-rose-500 font-bold ml-1" aria-hidden="true">*</span>
+                <span className="text-onion-500 font-bold ml-1" aria-hidden="true">*</span>
                 <span className="sr-only"> (required)</span>
               </>
             )}
           </label>
         )}
-        {labelRight && <div className="text-xs text-slate-500 dark:text-slate-400">{labelRight}</div>}
+        {labelRight && <div className="text-[11px] text-stone-400 font-medium">{labelRight}</div>}
       </div>
 
       {children}
 
       {hint && !error && (
-        <p id={id ? `${id}-hint` : undefined} className="text-xs text-slate-500 dark:text-slate-400">
+        <p id={id ? `${id}-hint` : undefined} className="text-[11px] text-stone-400 font-medium">
           {hint}
         </p>
       )}
@@ -52,7 +52,7 @@ export function Field({
         <p
           id={id ? `${id}-error` : undefined}
           role="alert"
-          className="text-xs font-semibold text-rose-600 dark:text-rose-400 flex items-center gap-1"
+          className="text-[11px] font-semibold text-rose-600 flex items-center gap-1 animate-fade-in-up"
         >
           <span aria-hidden="true">⚠</span> {error}
         </p>
@@ -62,7 +62,7 @@ export function Field({
 }
 
 /**
- * Accessible Text Input with optional leading icon.
+ * Text Input with glow focus and glass background.
  */
 export function TextInput({
   id,
@@ -83,9 +83,9 @@ export function TextInput({
   const describedBy = error ? `${id}-error` : undefined;
 
   return (
-    <div className="relative rounded-xl shadow-xs">
+    <div className="relative rounded-2xl">
       {Icon && (
-        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 dark:text-slate-500">
+        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-stone-400">
           <Icon className="w-4 h-4" />
         </div>
       )}
@@ -102,12 +102,12 @@ export function TextInput({
         maxLength={maxLength}
         aria-invalid={!!error}
         aria-describedby={describedBy}
-        className={`w-full rounded-xl border bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm font-medium py-2.5 transition-colors placeholder:text-stone-400 dark:placeholder:text-stone-500 focus:outline-hidden focus:ring-2 disabled:bg-stone-100 dark:disabled:bg-stone-800 disabled:cursor-not-allowed ${
-          Icon ? 'pl-10' : 'pl-3.5'
-        } pr-3.5 ${
+        className={`glow-input w-full rounded-2xl border bg-white/70 backdrop-blur-sm text-stone-900 text-sm font-medium py-3 transition-all placeholder:text-stone-400 focus:outline-hidden focus:bg-white disabled:bg-stone-50 disabled:cursor-not-allowed ${
+          Icon ? 'pl-10' : 'pl-4'
+        } pr-4 ${
           error
-            ? 'border-rose-400 focus:border-rose-500 focus:ring-rose-500/20'
-            : 'border-papery-300/80 dark:border-stone-700 hover:border-onion-400 dark:hover:border-onion-700 focus:border-onion-700 focus:ring-onion-700/20'
+            ? 'border-rose-300 focus:border-rose-500 shadow-[0_0_0_3px_rgba(225,29,72,0.08)]'
+            : 'border-stone-200/80 hover:border-onion-300 focus:border-onion-600'
         } ${className}`}
         {...props}
       />
@@ -116,7 +116,7 @@ export function TextInput({
 }
 
 /**
- * Accessible Select Dropdown.
+ * Select Dropdown with glass background and glow focus.
  */
 export function Select({
   id,
@@ -135,9 +135,9 @@ export function Select({
   const describedBy = error ? `${id}-error` : undefined;
 
   return (
-    <div className="relative rounded-xl shadow-xs">
+    <div className="relative rounded-2xl">
       {Icon && (
-        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-stone-400 dark:text-stone-500">
+        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-stone-400">
           <Icon className="w-4 h-4" />
         </div>
       )}
@@ -150,12 +150,12 @@ export function Select({
         disabled={disabled}
         aria-invalid={!!error}
         aria-describedby={describedBy}
-        className={`w-full appearance-none rounded-xl border bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm font-medium py-2.5 transition-colors focus:outline-hidden focus:ring-2 disabled:bg-stone-100 dark:disabled:bg-stone-800 disabled:cursor-not-allowed ${
-          Icon ? 'pl-10' : 'pl-3.5'
+        className={`glow-input w-full appearance-none rounded-2xl border bg-white/70 backdrop-blur-sm text-stone-900 text-sm font-medium py-3 transition-all focus:outline-hidden focus:bg-white disabled:bg-stone-50 disabled:cursor-not-allowed ${
+          Icon ? 'pl-10' : 'pl-4'
         } pr-10 ${
           error
-            ? 'border-rose-400 focus:border-rose-500 focus:ring-rose-500/20'
-            : 'border-papery-300/80 dark:border-stone-700 hover:border-onion-400 dark:hover:border-onion-700 focus:border-onion-700 focus:ring-onion-700/20'
+            ? 'border-rose-300 focus:border-rose-500 shadow-[0_0_0_3px_rgba(225,29,72,0.08)]'
+            : 'border-stone-200/80 hover:border-onion-300 focus:border-onion-600'
         } ${className}`}
         {...props}
       >
@@ -178,8 +178,7 @@ export function Select({
 }
 
 /**
- * Robust Percent Input that enforces 0-100 clamping strictly in the JS handler.
- * Handles typing, pasting, step buttons, and non-numeric characters.
+ * Percent Input with glow focus, visual fill indicator, and quick step buttons.
  */
 export function PercentInput({
   id,
@@ -214,10 +213,24 @@ export function PercentInput({
   };
 
   const numericVal = value === '' ? null : Number(value);
+  const fillPercent = numericVal !== null ? Math.min(100, Math.max(0, numericVal)) : 0;
 
   return (
-    <div className="space-y-1">
-      <div className="relative flex items-center rounded-xl shadow-xs">
+    <div className="space-y-1.5">
+      <div className="relative rounded-2xl">
+        {/* Visual fill indicator */}
+        <div
+          className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none"
+          aria-hidden="true"
+        >
+          <div
+            className={`h-full transition-all duration-500 ease-out ${
+              fillPercent > 15 ? 'bg-onion-50/40' : fillPercent > 0 ? 'bg-emerald-50/30' : ''
+            }`}
+            style={{ width: `${fillPercent}%` }}
+          />
+        </div>
+
         <input
           id={id}
           name={name || id}
@@ -234,56 +247,32 @@ export function PercentInput({
           aria-valuemin={0}
           aria-valuemax={100}
           aria-valuenow={numericVal !== null ? numericVal : undefined}
-          className={`w-full rounded-xl border bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm font-semibold pl-3.5 pr-12 py-2.5 transition-colors placeholder:text-stone-400 focus:outline-hidden focus:ring-2 disabled:bg-stone-100 dark:disabled:bg-stone-800 disabled:cursor-not-allowed ${
+          className={`glow-input relative z-10 w-full rounded-2xl border bg-white/70 backdrop-blur-sm text-stone-900 text-sm font-semibold pl-4 pr-12 py-3 transition-all placeholder:text-stone-400 focus:outline-hidden focus:bg-white/90 disabled:bg-stone-50 disabled:cursor-not-allowed ${
             error
-              ? 'border-rose-400 focus:border-rose-500 focus:ring-rose-500/20'
-              : 'border-papery-300/80 dark:border-stone-700 hover:border-onion-400 focus:border-onion-700 focus:ring-onion-700/20'
+              ? 'border-rose-300 focus:border-rose-500'
+              : 'border-stone-200/80 hover:border-onion-300 focus:border-onion-600'
           } ${className}`}
           {...props}
         />
-        <div className="pointer-events-none absolute right-3 flex items-center text-xs font-bold text-onion-700/60 dark:text-onion-400/70 select-none">
+        <div className="pointer-events-none absolute right-3.5 inset-y-0 flex items-center text-xs font-bold text-onion-600/50 select-none z-10">
           %
         </div>
       </div>
 
       {showQuickButtons && !disabled && (
-        <div className="flex items-center gap-1.5 pt-0.5" aria-hidden="true">
-          <button
-            type="button"
-            tabIndex={-1}
-            onClick={() => handleStep(-5)}
-            className="px-2 py-0.5 text-[11px] font-semibold rounded-md bg-papery-100/80 dark:bg-stone-800 hover:bg-onion-100 dark:hover:bg-onion-950 text-stone-700 dark:text-stone-300 hover:text-onion-900 transition-colors"
-            title="Decrease 5%"
-          >
-            -5%
-          </button>
-          <button
-            type="button"
-            tabIndex={-1}
-            onClick={() => handleStep(-1)}
-            className="px-2 py-0.5 text-[11px] font-semibold rounded-md bg-papery-100/80 dark:bg-stone-800 hover:bg-onion-100 dark:hover:bg-onion-950 text-stone-700 dark:text-stone-300 hover:text-onion-900 transition-colors"
-            title="Decrease 1%"
-          >
-            -1%
-          </button>
-          <button
-            type="button"
-            tabIndex={-1}
-            onClick={() => handleStep(1)}
-            className="px-2 py-0.5 text-[11px] font-semibold rounded-md bg-papery-100/80 dark:bg-stone-800 hover:bg-onion-100 dark:hover:bg-onion-950 text-stone-700 dark:text-stone-300 hover:text-onion-900 transition-colors"
-            title="Increase 1%"
-          >
-            +1%
-          </button>
-          <button
-            type="button"
-            tabIndex={-1}
-            onClick={() => handleStep(5)}
-            className="px-2 py-0.5 text-[11px] font-semibold rounded-md bg-papery-100/80 dark:bg-stone-800 hover:bg-onion-100 dark:hover:bg-onion-950 text-stone-700 dark:text-stone-300 hover:text-onion-900 transition-colors"
-            title="Increase 5%"
-          >
-            +5%
-          </button>
+        <div className="flex items-center gap-1.5" aria-hidden="true">
+          {[-5, -1, 1, 5].map((delta) => (
+            <button
+              key={delta}
+              type="button"
+              tabIndex={-1}
+              onClick={() => handleStep(delta)}
+              className="px-2.5 py-1 text-[10px] font-bold rounded-lg bg-white/60 hover:bg-onion-50 text-stone-600 hover:text-onion-700 border border-stone-200/60 hover:border-onion-200 transition-all active:scale-95"
+              title={`${delta > 0 ? 'Increase' : 'Decrease'} ${Math.abs(delta)}%`}
+            >
+              {delta > 0 ? '+' : ''}{delta}%
+            </button>
+          ))}
         </div>
       )}
     </div>
@@ -291,38 +280,38 @@ export function PercentInput({
 }
 
 /**
- * Clean Section Heading with icon, title, subtitle, and action slot.
+ * Section Heading with gradient underline and glass icon background.
  */
 export function SectionHeading({
   icon: Icon,
   title,
   subtitle,
   badge,
-  badgeColor = 'bg-onion-50 text-onion-800 dark:bg-onion-950/60 dark:text-onion-300 border-onion-200 dark:border-onion-800',
+  badgeColor = 'bg-onion-50/80 text-onion-700 border-onion-200/60',
   action,
   className = '',
 }) {
   return (
-    <div className={`flex flex-wrap items-start justify-between gap-3 pb-4 border-b border-papery-200/80 dark:border-stone-800 ${className}`}>
+    <div className={`flex flex-wrap items-start justify-between gap-3 pb-4 border-b border-stone-200/50 ${className}`}>
       <div className="flex items-start gap-3">
         {Icon && (
-          <div className="p-2.5 rounded-xl bg-gradient-to-br from-onion-100/80 to-papery-100/80 dark:from-onion-950/80 dark:to-stone-900 text-onion-800 dark:text-onion-300 border border-onion-200/80 dark:border-onion-800/60 shadow-xs">
+          <div className="p-2.5 rounded-xl bg-gradient-to-br from-onion-100/60 to-gold-50/40 text-onion-700 border border-onion-200/40 shadow-xs hover:shadow-md hover:scale-105 transition-all duration-300">
             <Icon className="w-5 h-5" />
           </div>
         )}
         <div>
           <div className="flex items-center gap-2.5 flex-wrap">
-            <h2 className="text-base font-bold text-stone-900 dark:text-white tracking-tight">
+            <h2 className="text-base font-bold text-stone-900 tracking-tight gradient-underline">
               {title}
             </h2>
             {badge && (
-              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold border ${badgeColor}`}>
+              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold border ${badgeColor}`}>
                 {badge}
               </span>
             )}
           </div>
           {subtitle && (
-            <p className="mt-0.5 text-xs text-stone-500 dark:text-stone-400">
+            <p className="mt-1 text-[11px] text-stone-400 font-medium">
               {subtitle}
             </p>
           )}

@@ -21,7 +21,7 @@ export function SourceSection({
   };
 
   return (
-    <div className="glass-card rounded-3xl border border-papery-200/90 dark:border-onion-900/60 p-7 sm:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.4)] transition-all hover:border-onion-300/80 dark:hover:border-onion-800 space-y-6">
+    <div id="section-source" className="glass-card rounded-3xl p-5 sm:p-6 space-y-4">
       <SectionHeading
         icon={MapPinIcon}
         title={t.sec1Title || 'Source & Supplier Traceability'}
@@ -29,7 +29,7 @@ export function SourceSection({
         badge={t.sec1Badge || 'Section 01'}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* 1. Supplier / Farmer Name */}
         <Field
           id="supplier-name"
@@ -57,7 +57,7 @@ export function SourceSection({
           error={errors.supplierPhone}
           hint={t.supplierPhoneHint || 'Digits, +, - only (Max 15 chars)'}
           labelRight={
-            <span className="text-[11px] font-mono text-stone-400 dark:text-stone-500 font-semibold">
+            <span className="text-[11px] font-mono text-stone-400 font-semibold">
               {(values.supplierPhone || '').length}/15
             </span>
           }
@@ -88,7 +88,7 @@ export function SourceSection({
             name="state"
             value={values.state || ''}
             onChange={(e) => onChange('state', e.target.value)}
-            options={PRODUCING_STATES.map((s) => ({ value: s, label: s }))}
+            options={PRODUCING_STATES.map((s) => ({ value: s, label: t[s] || s }))}
             placeholder={t.statePlh || 'Select origin state'}
             disabled={disabled}
             error={errors.state}

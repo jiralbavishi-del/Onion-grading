@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, TextInput, SectionHeading } from '../ui/FormPrimitives';
-import { FileTextIcon, UserIcon } from '../ui/icons';
+import { FileTextIcon, UserIcon, CheckCircleIcon } from '../ui/icons';
 
 /**
  * Section 4: Inspector Field Notes & Certifier Sign-off (Streamlined)
@@ -13,15 +13,21 @@ export function NotesSection({
   t = {},
 }) {
   return (
-    <div className="glass-card rounded-3xl border border-papery-200/90 dark:border-onion-900/60 p-7 sm:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.4)] transition-all hover:border-onion-300/80 dark:hover:border-onion-800 space-y-6">
+    <div id="section-notes" className="glass-card rounded-3xl p-5 sm:p-6 space-y-4">
       <SectionHeading
         icon={FileTextIcon}
         title={t.sec4Title || 'Inspector Notes & Sign-off'}
         subtitle={t.sec4Sub || 'Observations and certifying officer accreditation'}
         badge={t.sec4Badge || 'Section 04'}
+        action={
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200/80 text-[10px] font-bold">
+            <CheckCircleIcon className="w-3.5 h-3.5 text-emerald-600" />
+            <span>AGMARK / APEDA Protocol</span>
+          </div>
+        }
       />
 
-      <div className="space-y-5">
+      <div className="space-y-3.5">
         {/* 1. Inspector Name & Officer Code */}
         <Field
           id="inspector-name"
@@ -34,7 +40,7 @@ export function NotesSection({
             name="inspectorName"
             value={values.inspectorName || ''}
             onChange={(e) => onChange('inspectorName', e.target.value)}
-            placeholder={t.inspectorNamePlh || 'e.g. Dr. S. Kulkarni (QA-Insp)'}
+            placeholder={t.inspectorNamePlh || 'e.g. Dr. S. Kulkarni (QA-Lead)'}
             icon={UserIcon}
             disabled={disabled}
             error={errors.inspectorName}
@@ -49,12 +55,12 @@ export function NotesSection({
           <textarea
             id="inspector-notes"
             name="notes"
-            rows={3}
+            rows={2}
             value={values.notes || ''}
             onChange={(e) => onChange('notes', e.target.value)}
-            placeholder={t.notesPlh || 'Describe curing condition, bulb firmness, or storage recommendations...'}
+            placeholder={t.notesPlh || 'Describe curing condition, bulb firmness, or export storage recommendations...'}
             disabled={disabled}
-            className="w-full rounded-2xl border border-papery-300/80 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 text-sm p-4 transition-colors placeholder:text-stone-400 focus:outline-hidden focus:border-onion-700 focus:ring-2 focus:ring-onion-700/20 disabled:bg-stone-100 dark:disabled:bg-stone-800 disabled:cursor-not-allowed resize-y shadow-xs"
+            className="glow-input w-full rounded-2xl border border-stone-200/80 bg-white/70 backdrop-blur-sm text-stone-900 text-sm p-3.5 transition-all placeholder:text-stone-400 focus:outline-hidden focus:bg-white focus:border-onion-600 disabled:bg-stone-50 disabled:cursor-not-allowed resize-none shadow-xs"
           />
         </Field>
       </div>

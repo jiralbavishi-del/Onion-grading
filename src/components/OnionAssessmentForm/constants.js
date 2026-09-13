@@ -21,30 +21,80 @@ export function formatBytes(bytes) {
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(1))} ${sizes[i]}`;
 }
 
-export const INDIAN_STATES = [
+export const PRODUCING_STATES = [
   "Maharashtra", "Karnataka", "Madhya Pradesh", "Gujarat", "Rajasthan",
   "Bihar", "Andhra Pradesh", "Telangana", "Haryana", "Uttar Pradesh",
   "West Bengal", "Tamil Nadu", "Odisha", "Punjab",
 ];
+export const INDIAN_STATES = PRODUCING_STATES;
 
-export const VARIETIES = [
-  "Nashik Red", "Pune Red / Alibag", "Bellary Red", "Bangalore Rose",
-  "Agrifound Dark Red", "Agrifound Light Red", "Pusa Red",
-  "Pusa White Round", "Pusa Madhavi", "White Onion (Local)",
-  "Yellow Granex", "Red Creole", "Other",
+export const ONION_VARIETIES = [
+  { id: "nashik_red", name: "Nashik Red", type: "Rabi / Storage" },
+  { id: "bhima_super", name: "Bhima Super", type: "Kharif / High Yield" },
+  { id: "bellary_red", name: "Bellary Red", type: "Southern High Color" },
+  { id: "pune_fursungi", name: "Pune Fursungi", type: "Export / Rabi" },
+  { id: "bangalore_rose", name: "Bangalore Rose", type: "GI Tag / Export Pickle" },
+  { id: "agrifound_dark_red", name: "Agrifound Dark Red", type: "Dark Red / Storage" },
+  { id: "pusa_red", name: "Pusa Red", type: "Medium Red / High TSS" },
+  { id: "white_onion", name: "White Onion (Dehydration)", type: "Processing / High Solids" },
+  { id: "yellow_granex", name: "Yellow Granex", type: "Sweet / Mild" },
+  { id: "red_creole", name: "Red Creole", type: "Pungent / Storage" },
+  { id: "pusa_white_round", name: "Pusa White Round", type: "White / High Yield" },
+  { id: "pusa_madhavi", name: "Pusa Madhavi", type: "Light Red / Medium Storage" },
+  { id: "arka_kalyan", name: "Arka Kalyan", type: "Pinkish Red / Kharif" },
+  { id: "agrifound_light_red", name: "Agrifound Light Red", type: "Light Red / Rabi" },
+  { id: "other", name: "Other", type: "Unspecified" }
 ];
+export const VARIETIES = ONION_VARIETIES.map((v) => v.name);
 
 export const GRADES = [
-  { id: "A", label: "Grade A", tag: "Premium", desc: "Uniform bulbs, firm, minimal defects" },
-  { id: "B", label: "Grade B", tag: "Standard", desc: "Fair uniformity, moderate defects" },
-  { id: "C", label: "Grade C", tag: "Processing", desc: "Irregular size, high defect tolerance" },
+  {
+    id: "Grade A",
+    label: "Grade A",
+    badge: "Premium Export",
+    tag: "Premium",
+    color: "onion",
+    description: "Uniform shape, tight neck, cured skin, total defects ≤ 5%",
+    desc: "Uniform bulbs, firm, minimal defects",
+    maxDefectTotal: 5,
+  },
+  {
+    id: "Grade B",
+    label: "Grade B",
+    badge: "Domestic Standard",
+    tag: "Standard",
+    color: "amber",
+    description: "Acceptable uniformity, slight skin shedding, defects ≤ 10%",
+    desc: "Fair uniformity, moderate defects",
+    maxDefectTotal: 10,
+  },
+  {
+    id: "Grade C",
+    label: "Grade C",
+    badge: "Discount / Local",
+    tag: "Processing",
+    color: "rose",
+    description: "Varied caliber, moderate cuts, bolters allowed, defects ≤ 20%",
+    desc: "Irregular size, high defect tolerance",
+    maxDefectTotal: 20,
+  },
+  {
+    id: "Reject",
+    label: "Reject / Culled",
+    badge: "Sub-standard",
+    tag: "Reject",
+    color: "stone",
+    description: "Severe rot, heavy sprouting > 12%, unsellable commercial stock",
+    desc: "Severe decay or defect load exceeding threshold",
+    maxDefectTotal: 100,
+  },
 ];
 
 export const SIZE_CLASSES = [
-  { id: "S", label: "Small", range: "< 35 mm" },
-  { id: "M", label: "Medium", range: "35–55 mm" },
-  { id: "L", label: "Large", range: "55–70 mm" },
-  { id: "J", label: "Jumbo", range: "> 70 mm" },
+  { id: "Small", label: "Small (S)", range: "< 35 mm", caliber: "< 35 mm", circleDiameter: 30, mmMin: "30", purpose: "Pickling & domestic soup" },
+  { id: "Medium", label: "Medium (M)", range: "35–55 mm", caliber: "35–55 mm", circleDiameter: 42, mmMin: "45", purpose: "Standard household & retail" },
+  { id: "Large", label: "Large (L)", range: "55–70 mm", caliber: "55–70 mm", circleDiameter: 54, mmMin: "60", purpose: "Commercial catering & slicing" },
+  { id: "Jumbo", label: "Jumbo (XL)", range: "> 70 mm", caliber: "> 70 mm", circleDiameter: 66, mmMin: "75", purpose: "Premium export & processing" },
 ];
 
 export const PACKAGING = ["Mesh bag", "Jute bag", "Loose / bulk", "Crate"];
