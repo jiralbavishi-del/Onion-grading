@@ -1,29 +1,55 @@
-# 🧅 Onion Grading — Quality Assessment Tool
+# Onion Grading — Quality Assessment System
 
-A multilingual onion quality assessment web application built with **React + Vite + Tailwind CSS**. Designed for field inspectors and suppliers to record, evaluate, and summarise onion batches efficiently.
+A modern, high-precision onion grading and defect evaluation dashboard built with **React 19 + Vite + Tailwind CSS**. Engineered for agricultural inspectors, packhouse managers, and export certifiers to systematically inspect, quantify defects, and certify onion consignments compliant with **APEDA / AGMARK** export benchmarks.
 
 ---
 
-## Features
+## Key Features
 
-- **Supplier & Source Details** — capture supplier name, phone number, and state of origin
-- **Crop Details** — variety (e.g. Nashik Red), grade picker, and size classification
-- **Quality Metrics** — moisture %, sprouting %, damage %, and doubles % with 0–100 clamping
-- **Photo Evidence** — drag-and-drop image upload with 12 MB cap and automatic URL revocation
-- **Inspector Notes** — free-form notes and certifier name
-- **Summary Card** — instant printable/shareable assessment summary
-- **Multilingual UI** — English, Marathi (मराठी), Hindi (हिंदी), and Gujarati (ગુજરાતી)
+- **Origin & Traceability Dashboard**:
+  - Record supplier credentials, verified contact details, and origin state.
+  - Interactive cultivar selection featuring 12+ standard Indian onion varieties (*Nashik Red, Bhima Super, Bellary Red, Pune Fursungi, Bangalore Rose, Agrifound Dark Red*, etc.) with high-definition specimen previews and origin details on hover.
+  - Standardized grade classification (`Grade A`, `Grade B`, `Grade C`, `Reject`) and size caliber picker (`Small`, `Medium`, `Large`, `Extra Large`).
+
+- **Real-time Quality Metric Hub & Grade Certificate**:
+  - Animated dynamic SVG circular gauge displaying a mathematically rigorous agronomic quality score (0 - 100%).
+  - APEDA/AGMARK compliant status ratings (`CERTIFIED`, `STANDARD`, `CONDITIONAL`, `REJECTED`).
+  - Automated discrepancy detection if manual grade selection conflicts with telemetry readings.
+
+- **Defect Tolerance Calibration (Telemetry)**:
+  - Synchronized sliders and numeric steppers with color-coded tolerance thresholds.
+  - Real-time quantitative calibration for:
+    - **Sprouting Rate (%)** (Tolerance: 0% - 5% export, >8% reject)
+    - **Doubles & Splits (%)** (Tolerance: 0% - 4% standard, >6% industrial)
+    - **Moisture Content (%)** (Benchmarked: 12% - 14%)
+    - **Mechanical Damage & Cuts (%)** (Tolerance: 0% - 3% clean, >7% blemish)
+  - Real-time cumulative defect load calculation with live telemetry feedback.
+
+- **Interactive Photo Evidence & Visual Intake**:
+  - Drag-and-drop image upload supporting JPEG, PNG, and WebP (up to 12 MB per photo).
+  - Photographic reference library showcasing live defect specimens (*Sprouted Bulb*, *Pristine Export Grade A*, *Twin / Split Bulb*).
+
+- **Expert Quality Analysis & Log Actions**:
+  - Automatically synthesized agricultural expert analysis and storage advisories.
+  - Assessment record saving and PDF export readiness.
+
+- **Multilingual Support (8 Indian Languages)**:
+  - English, मराठी (Marathi), हिन्दी (Hindi), ગુજરાતી (Gujarati), ಕನ್ನಡ (Kannada), తెలుగు (Telugu), தமிழ் (Tamil), and ਪੰਜਾਬੀ (Punjabi).
+
+- **Responsive Bento QC Architecture**:
+  - Modern Bento grid layout, mobile-optimized 2-column navigation pills, and clean minimal aesthetic.
 
 ---
 
 ## Tech Stack
 
-| Layer      | Technology                        |
-|------------|-----------------------------------|
-| Framework  | React 19 + Vite 8                 |
-| Styling    | Tailwind CSS 3                    |
-| Linting    | Oxlint                            |
-| Build tool | Vite                              |
+| Layer | Technology |
+|---|---|
+| **Framework** | [React 19](https://react.dev/) + [Vite 8](https://vitejs.dev/) |
+| **Styling** | [Tailwind CSS 3](https://tailwindcss.com/) (Custom Bento Design System) |
+| **Icons** | Custom Lucide-compatible vector SVG icon suite |
+| **Language Support** | Built-in reactive dictionary (8 languages) |
+| **Linter** | [Oxlint](https://oxc.rs/) |
 
 ---
 
@@ -31,36 +57,41 @@ A multilingual onion quality assessment web application built with **React + Vit
 
 ### Prerequisites
 
-- Node.js **≥ 18**
-- npm **≥ 9**
+- **Node.js** ≥ 18.0.0
+- **npm** ≥ 9.0.0
 
-### Install
+### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/your-username/onion-grading.git
+
+# Navigate to the project directory
+cd onion-grading
+
+# Install dependencies
 npm install
 ```
 
-### Run in development
+### Development Server
 
 ```bash
 npm run dev
 ```
-
 Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-### Build for production
+### Production Build
 
 ```bash
 npm run build
 ```
 
-Preview the production build:
-
+To preview the built production bundle:
 ```bash
 npm run preview
 ```
 
-### Lint
+### Code Quality / Linting
 
 ```bash
 npm run lint
@@ -68,52 +99,41 @@ npm run lint
 
 ---
 
-## Project Structure
+## Project Architecture
 
 ```
 onion-grading/
-├── public/                         # Static assets
+├── public/                                  # High-resolution specimen & variety assets
+│   ├── samples/                             # Authentic defect photos
+│   └── varieties/                           # Authentic onion cultivar photos
 ├── src/
 │   ├── components/
 │   │   └── OnionAssessmentForm/
-│   │       ├── index.jsx           # Main form component
-│   │       ├── constants.js        # Grade, variety, size constants
-│   │       ├── translations.js     # i18n strings (EN, MR, HI, GU)
-│   │       ├── hooks/              # Custom React hooks
-│   │       ├── sections/           # Form section sub-components
-│   │       │   ├── SourceSection.jsx
-│   │       │   ├── OnionDetailsSection.jsx
-│   │       │   ├── QualitySection.jsx
-│   │       │   ├── NotesSection.jsx
-│   │       │   ├── ImageDropzone.jsx
-│   │       │   └── SummaryCard.jsx
-│   │       └── ui/                 # Shared UI primitives & icons
-│   ├── App.jsx
-│   ├── App.css
-│   ├── main.jsx
-│   └── index.css
-├── index.html
-├── vite.config.js
-├── tailwind.config.js
-├── postcss.config.js
-├── .oxlintrc.json
-└── package.json
+│   │       ├── index.jsx                    # Primary Bento Dashboard controller
+│   │       ├── constants.js                 # Grades, varieties, states, and sizing standards
+│   │       ├── translations.js              # Comprehensive 8-language localization dictionaries
+│   │       ├── onionImagesData.js           # Cultivar & defect specimen reference dataset
+│   │       ├── sections/
+│   │       │   ├── OriginTraceabilitySection.jsx   # Section 01: Supplier & Cultivar Picker
+│   │       │   ├── QualitySection.jsx              # Section 02: Telemetry calibration sliders
+│   │       │   ├── ImageDropzone.jsx               # Section 03: Photo intake & live samples
+│   │       │   └── ExpertOpinionSection.jsx        # Section 04: Agronomic summary & export logs
+│   │       └── ui/
+│   │           ├── BentoGradeBadge.jsx      # Dynamic Certificate Hub & Circular Gauge
+│   │           ├── FormPrimitives.jsx       # Custom text inputs, selects, and steppers
+│   │           ├── Pickers.jsx              # Grade & caliber selection buttons
+│   │           └── icons.jsx                # Vector icon components
+│   ├── App.jsx                              # Root shell, responsive navbar, and minimal footer
+│   ├── index.css                            # Tailored design tokens, glassmorphism, animations
+│   └── main.jsx                             # Application bootstrap
+├── index.html                               # HTML5 entry with Inter typography
+├── tailwind.config.js                       # Palette, shadows, and animation configuration
+├── vite.config.js                           # Vite configuration
+└── package.json                             # Dependencies and scripts
 ```
-
----
-
-## Usage
-
-1. Select your preferred language from the dropdown (EN / MR / HI / GU).
-2. Fill in supplier details and state of origin.
-3. Choose the onion variety, grade, and size class.
-4. Enter quality metrics (moisture, sprouting, damage, doubles).
-5. Upload photo evidence by dragging images into the dropzone.
-6. Add inspector name and any additional notes.
-7. Review the **Summary Card** and share or print as needed.
 
 ---
 
 ## License
 
-This project is private and not licensed for public distribution.
+This project is proprietary and maintained for standardized onion grading and quality certification.

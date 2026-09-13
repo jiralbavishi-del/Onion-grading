@@ -48,3 +48,8 @@ desktop.ini
 
 # ─── Test coverage ──────────────────────────────────────────────────────────────
 coverage/
+
+# ─── Scratch & temporary scripts ─────────────────────────────────────────────
+scratch/
+*.pyc
+__pycache__/
