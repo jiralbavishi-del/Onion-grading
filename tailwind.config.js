@@ -7,8 +7,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['Inter', 'sans-serif'],
+        sans: ['Roboto', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['"Roboto Condensed"', 'Roboto', 'sans-serif'],
+        condensed: ['"Roboto Condensed"', 'Roboto', 'sans-serif'],
+        heading: ['"Roboto Condensed"', 'Roboto', 'sans-serif'],
         serif: ['"Playfair Display"', 'Georgia', 'serif'],
       },
       boxShadow: {
