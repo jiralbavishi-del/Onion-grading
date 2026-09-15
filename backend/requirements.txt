@@ -1,0 +1,5 @@
+django>=6.1.1
+djangorestframework>=3.18.1
+django-cors-headers>=4.9.0
+pillow>=12.3.0
+reportlab>=5.0.1

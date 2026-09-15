@@ -53,3 +53,18 @@ coverage/
 scratch/
 *.pyc
 __pycache__/
+
+# ─── Python & Django ────────────────────────────────────────────────────────────
+env/
+.env/
+.venv/
+venv/
+*.sqlite3
+db.sqlite3
+media/
+backend/__pycache__/
+*.py[cod]
+*.class
+
+# ─── Jazzmin / Static ───────────────────────────────────────────────────────────
+backend/static/
